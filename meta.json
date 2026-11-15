@@ -1,0 +1,16 @@
+{
+  "category": "General",
+  "changelog": "Initial release",
+  "description": "Removes HEVC (configurable) from the Chromecast receiver's device profile so the server transcodes to H.264 at full bitrate.",
+  "guid": "3959bb87-eac3-44dd-8889-1a0e5c952d37",
+  "name": "Cast Codec Block",
+  "overview": "Fix green/corrupt HEVC playback when casting",
+  "owner": "jhorst",
+  "targetAbi": "10.11.0.0",
+  "timestamp": "2026-11-15T00:00:00.0000000Z",
+  "version": "1.0.0.0",
+  "status": "Active",
+  "autoUpdate": false,
+  "imagePath": "",
+  "assemblies": []
+}

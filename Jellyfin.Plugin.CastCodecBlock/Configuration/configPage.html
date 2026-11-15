@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cast Codec Block</title>
+</head>
+<body>
+    <div id="CastCodecBlockConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-checkbox">
+        <div data-role="content">
+            <div class="content-primary">
+                <form id="CastCodecBlockConfigForm">
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label class="emby-checkbox-label">
+                            <input id="Enabled" type="checkbox" is="emby-checkbox" />
+                            <span>Enabled</span>
+                        </label>
+                    </div>
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ClientNames">Client names</label>
+                        <input id="ClientNames" type="text" is="emby-input" />
+                        <div class="fieldDescription">Comma separated, matched as substring. The cast receiver is "Chromecast".</div>
+                    </div>
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="BlockedVideoCodecs">Blocked video codecs</label>
+                        <input id="BlockedVideoCodecs" type="text" is="emby-input" />
+                        <div class="fieldDescription">Comma separated, e.g. hevc,h265,av1. These get transcoded for the clients above.</div>
+                    </div>
+                    <div>
+                        <button is="emby-button" type="submit" class="raised button-submit block emby-button">
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var CastCodecBlockConfig = { pluginUniqueId: '3959bb87-eac3-44dd-8889-1a0e5c952d37' };
+
+            document.querySelector('#CastCodecBlockConfigPage')
+                .addEventListener('pageshow', function () {
+                    Dashboard.showLoadingMsg();
+                    ApiClient.getPluginConfiguration(CastCodecBlockConfig.pluginUniqueId).then(function (config) {
+                        document.querySelector('#Enabled').checked = config.Enabled;
+                        document.querySelector('#ClientNames').value = config.ClientNames;
+                        document.querySelector('#BlockedVideoCodecs').value = config.BlockedVideoCodecs;
+                        Dashboard.hideLoadingMsg();
+                    });
+                });
+
+            document.querySelector('#CastCodecBlockConfigForm')
+                .addEventListener('submit', function (e) {
+                    Dashboard.showLoadingMsg();
+                    ApiClient.getPluginConfiguration(CastCodecBlockConfig.pluginUniqueId).then(function (config) {
+                        config.Enabled = document.querySelector('#Enabled').checked;
+                        config.ClientNames = document.querySelector('#ClientNames').value;
+                        config.BlockedVideoCodecs = document.querySelector('#BlockedVideoCodecs').value;
+                        ApiClient.updatePluginConfiguration(CastCodecBlockConfig.pluginUniqueId, config).then(function (result) {
+                            Dashboard.processPluginConfigurationUpdateResult(result);
+                        });
+                    });
+                    e.preventDefault();
+                    return false;
+                });
+        </script>
+    </div>
+</body>
+</html>
