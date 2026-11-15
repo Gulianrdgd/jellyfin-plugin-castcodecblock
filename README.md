@@ -32,4 +32,4 @@ Make sure hardware encoding is enabled under Playback → Transcoding on low-pow
 dotnet build Jellyfin.Plugin.CastCodecBlock -c Release
 ```
 
-Bump `AssemblyVersion` in the csproj, then push a matching tag (`v1.0.1`). The workflow builds, publishes the release and adds the version to `manifest.json`.
+Bump `AssemblyVersion` in the csproj and push to `main`. When no release exists for that version yet, the workflow tags it (`v1.0.0.1` style), publishes the release and adds it to `manifest.json`.
