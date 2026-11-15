@@ -12,9 +12,15 @@ The Jellyfin cast receiver identifies itself as `Chromecast`.
 
 ## Install
 
-1. Download the zip from Releases (or the latest workflow artifact).
-2. Unzip into `<jellyfin config>/plugins/`, so you get `plugins/CastCodecBlock_1.0.0.0/`.
-3. Restart Jellyfin. Configure under Dashboard → Plugins → Cast Codec Block.
+Add this repository in Jellyfin under Dashboard → Plugins → Repositories:
+
+```
+https://raw.githubusercontent.com/Gulianrdgd/jellyfin-plugin-castcodecblock/main/manifest.json
+```
+
+Then install Cast Codec Block from the catalog and restart Jellyfin. Configure it under Dashboard → Plugins → Cast Codec Block.
+
+Manual install: unzip a release into `<jellyfin config>/plugins/CastCodecBlock_1.0.0.0/` and restart.
 
 When active, the log shows: `Cast Codec Block: removed hevc,h265 from device profile for client Chromecast`.
 
@@ -26,4 +32,4 @@ Make sure hardware encoding is enabled under Playback → Transcoding on low-pow
 dotnet build Jellyfin.Plugin.CastCodecBlock -c Release
 ```
 
-Tag `vX.Y.Z` to publish a release.
+Bump `AssemblyVersion` in the csproj, then push a matching tag (`v1.0.1`). The workflow builds, publishes the release and adds the version to `manifest.json`.
